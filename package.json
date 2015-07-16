@@ -1,0 +1,24 @@
+{
+  "name": "array2object",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkochan/array2object.git"
+  },
+  "author": "Zoltan Kochan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zkochan/array2object/issues"
+  },
+  "homepage": "https://github.com/zkochan/array2object#readme",
+  "devDependencies": {
+    "fosify-test": "^0.1.3",
+    "foso": "^0.9.6",
+    "gulp": "^3.9.0"
+  }
+}
