@@ -54,16 +54,9 @@ applyq(logger, _loggerq);
 ```
 
 After the object had been initialized, there is no need to store the commands
-anymore. The commands can be executed right away. That is why after applying the
-queue the object is enhanced with a `push` method which executes the command arrays
-instead of storing them. This allows us to substitute the commands queue with the
-newly created object.
-
-```js
-var logger = new Logger();
-applyq(logger, _loggerq);
-_loggerq = logger;
-```
+anymore. The commands can be executed right away. That's why after calling `applyq`
+the `push` method of the commands queue is overridden. The overridden version of
+push is executing the command arrays immediately instead of storing them.
 
 
 ## PS

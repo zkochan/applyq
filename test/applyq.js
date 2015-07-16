@@ -3,30 +3,7 @@
 var applyq = require('../');
 
 describe('applyq', function() {
-  it('populates the API', function() {
-    var api = {
-      foo: 1,
-      bar: function() {}
-    };
-    applyq(api, []);
-    expect(api).to.be.a('object');
-    expect(api.bar).to.be.a('function');
-    expect(api.foo).to.equal(1);
-  });
-
-  it('executes the API through push before conversion', function(done) {
-    var api = {
-        bar: function(parameters) {
-        expect(parameters).to.equal(5);
-        done();
-      }
-    };
-    var arr = [];
-    arr.push(['bar', 5]);
-    applyq(api, arr);
-  });
-
-  it('executes the API through push before conversion with multiple arguments', function(done) {
+  it('executes the cached command array', function(done) {
     var api = {
       bar: function(a, b) {
         expect(a).to.equal(1);
@@ -34,19 +11,20 @@ describe('applyq', function() {
         done();
       }
     };
-    var arr = [];
-    arr.push(['bar', 1, 2]);
-    applyq(api, arr);
+    var _apiq = [];
+    _apiq.push(['bar', 1, 2]);
+    applyq(api, _apiq);
   });
 
-  it('executes the API through properties', function(done) {
+  it('executes command array after the object was created', function(done) {
     var api = {
       bar: function(parameters) {
         expect(parameters).to.equal(5);
         done();
       }
     };
-    applyq(api, []);
-    api.bar(5);
+    var _apiq = [];
+    applyq(api, _apiq);
+    _apiq.push(['bar', 5]);
   });
 });

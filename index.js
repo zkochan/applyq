@@ -9,13 +9,13 @@ function applyq(obj, q) {
     throw new Error('q has to be an instance of Array');
   }
 
-  obj.push = function(data) {
-    if (this[data[0]]) {
-      this[data[0]].apply(this, data.splice(1));
+  q.push = obj.push = function(data) {
+    if (obj[data[0]]) {
+      obj[data[0]].apply(obj, data.splice(1));
       return;
     }
-    if (this.warn) {
-      this.warn('Array2Object was unable to process ' +
+    if (obj.warn) {
+      obj.warn('Array2Object was unable to process ' +
         data.toString());
     }
   };
