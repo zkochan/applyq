@@ -1,11 +1,13 @@
 'use strict';
 
 var applyq = require('../');
+var noop = function() {};
 
 describe('applyq', function() {
   it('executes the cached command array', function(done) {
     var api = {
       bar: function(a, b) {
+        expect(arguments.length).to.equal(2);
         expect(a).to.equal(1);
         expect(b).to.equal(2);
         done();
@@ -18,13 +20,51 @@ describe('applyq', function() {
 
   it('executes command array after the object was created', function(done) {
     var api = {
-      bar: function(parameters) {
-        expect(parameters).to.equal(5);
+      bar: function(param) {
+        expect(arguments.length).to.equal(1);
+        expect(param).to.equal(5);
         done();
       }
     };
     var _apiq = [];
     applyq(api, _apiq);
     _apiq.push(['bar', 5]);
+  });
+
+  it('does not save new items to the queue after the object was created', function() {
+    var api = {
+      bar: noop
+    };
+    var _apiq = [];
+    applyq(api, _apiq);
+    _apiq.push(['bar', 5]);
+    expect(_apiq.length).to.equal(0);
+  });
+
+  it('clears the queue', function() {
+    var api = {
+      bar: noop
+    };
+    var _apiq = [];
+    _apiq.push(['bar']);
+    _apiq.push(['bar']);
+    applyq(api, _apiq);
+    expect(_apiq.length).to.equal(0);
+  });
+
+  it('executes the queued commands in the correct order', function(done) {
+    var api = {
+      foo: function(param) {
+        expect(param).to.equal(1);
+      },
+      bar: function(param) {
+        expect(param).to.equal(2);
+        done();
+      }
+    };
+    var _apiq = [];
+    _apiq.push(['foo', 1]);
+    _apiq.push(['bar', 2]);
+    applyq(api, _apiq);
   });
 });

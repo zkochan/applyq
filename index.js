@@ -15,13 +15,13 @@ function applyq(obj, q) {
       return;
     }
     if (obj.warn) {
-      obj.warn('Array2Object was unable to process ' +
+      obj.warn('applyq was unable to process ' +
         data.toString());
     }
   };
 
-  for (var i = 0, len = q.length; i < len; i++) {
-    obj.push(q[i]);
+  while(q.length) {
+    obj.push(q.shift());
   }
 }
 
