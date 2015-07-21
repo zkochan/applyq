@@ -14,14 +14,12 @@ function applyq(obj, q) {
       obj[data[0]].apply(obj, data.splice(1));
       return;
     }
-    if (obj.warn) {
-      obj.warn('applyq was unable to process ' +
-        data.toString());
-    }
+    Array.prototype.push.apply(this, arguments);
   };
 
-  while(q.length) {
-    obj.push(q.shift());
+  var len = q.length;
+  while(len--) {
+    q.push(q.shift());
   }
 }
 
