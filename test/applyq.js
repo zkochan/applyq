@@ -5,31 +5,28 @@ var noop = function() {};
 var sinon = require('sinon');
 
 describe('applyq', function() {
-  it('executes the cached command array', function(done) {
+  it('executes the cached command array', function() {
+    var bar = sinon.spy();
     var api = {
-      bar: function(a, b) {
-        expect(arguments.length).to.equal(2);
-        expect(a).to.equal(1);
-        expect(b).to.equal(2);
-        done();
-      }
+      bar: bar
     };
     var _apiq = [];
     _apiq.push(['bar', 1, 2]);
     applyq(api, _apiq);
+
+    sinon.assert.calledWith(bar, 1, 2);
   });
 
-  it('executes command array after the object was created', function(done) {
+  it('executes command array after the object was created', function() {
+    var bar = sinon.spy();
     var api = {
-      bar: function(param) {
-        expect(arguments.length).to.equal(1);
-        expect(param).to.equal(5);
-        done();
-      }
+      bar: bar
     };
     var _apiq = [];
     applyq(api, _apiq);
-    _apiq.push(['bar', 5]);
+    _apiq.push(['bar', 5, 'someArg']);
+
+    sinon.assert.calledWith(bar, 5, 'someArg');
   });
 
   it('removes newly added item from queue after it was processed', function() {
@@ -53,25 +50,28 @@ describe('applyq', function() {
     expect(_apiq.length).to.equal(0);
   });
 
-  it('executes the queued commands in the correct order', function(done) {
-    var spy1 = sinon.spy();
-    var spy2 = sinon.spy();
+  it('executes the queued commands in the correct order', function() {
+    var foo = sinon.spy();
+    var bar = sinon.spy();
     var api = {
-      foo: spy1,
-      bar: spy2
+      foo: foo,
+      bar: bar
     };
     var _apiq = [];
     _apiq.push(['foo', 1]);
     _apiq.push(['bar', 2]);
     applyq(api, _apiq);
-    sinon.assert.callOrder(spy2, spy1);
-    done();
+
+    sinon.assert.callOrder(foo, bar);
+    sinon.assert.calledWith(foo, 1);
+    sinon.assert.calledWith(bar, 2);
   });
 
   describe('command arrays that are not matched are added to the queue', function() {
     it('after init', function() {
+      var foo = sinon.spy();
       var api = {
-        foo: function() {}
+        foo: foo
       };
       var _apiq = [];
       applyq(api, _apiq);
@@ -79,6 +79,7 @@ describe('applyq', function() {
       _apiq.push(['bar', 3]);
       _apiq.push(23);
 
+      sinon.assert.calledWith(foo, 1);
       expect(_apiq.length).to.eq(2);
       expect(_apiq[0].length).to.eq(2);
       expect(_apiq[0][0]).to.eq('bar');
@@ -87,14 +88,16 @@ describe('applyq', function() {
     });
 
     it('before init', function() {
+      var foo = sinon.spy();
       var api = {
-        foo: function() {}
+        foo: foo
       };
       var _apiq = [];
       _apiq.push(['foo', 1]);
       _apiq.push(['bar', 3]);
       applyq(api, _apiq);
 
+      sinon.assert.calledWith(foo, 1);
       expect(_apiq.length).to.eq(1);
       expect(_apiq[0].length).to.eq(2);
       expect(_apiq[0][0]).to.eq('bar');
