@@ -2,6 +2,7 @@
 
 var applyq = require('../');
 var noop = function() {};
+var sinon = require('sinon');
 
 describe('applyq', function() {
   it('executes the cached command array', function(done) {
@@ -31,7 +32,7 @@ describe('applyq', function() {
     _apiq.push(['bar', 5]);
   });
 
-  it('does not save new items to the queue after the object was created', function() {
+  it('removes newly added item from queue after it was processed', function() {
     var api = {
       bar: noop
     };
@@ -41,7 +42,7 @@ describe('applyq', function() {
     expect(_apiq.length).to.equal(0);
   });
 
-  it('clears the queue', function() {
+  it('clears existing items in the queue after processing', function() {
     var api = {
       bar: noop
     };
@@ -53,19 +54,18 @@ describe('applyq', function() {
   });
 
   it('executes the queued commands in the correct order', function(done) {
+    var spy1 = sinon.spy();
+    var spy2 = sinon.spy();
     var api = {
-      foo: function(param) {
-        expect(param).to.equal(1);
-      },
-      bar: function(param) {
-        expect(param).to.equal(2);
-        done();
-      }
+      foo: spy1,
+      bar: spy2
     };
     var _apiq = [];
     _apiq.push(['foo', 1]);
     _apiq.push(['bar', 2]);
     applyq(api, _apiq);
+    sinon.assert.callOrder(spy2, spy1);
+    done();
   });
 
   describe('command arrays that are not matched are added to the queue', function() {

@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/zkochan/applyq#readme",
   "devDependencies": {
-    "fosify-test": "^0.1.3",
+    "fosify-test": "^0.1.5",
     "foso": "^0.9.6",
     "gulp": "^3.9.0"
   },
