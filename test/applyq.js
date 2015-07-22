@@ -77,11 +77,13 @@ describe('applyq', function() {
       applyq(api, _apiq);
       _apiq.push(['foo', 1]);
       _apiq.push(['bar', 3]);
-      
-      expect(_apiq.length).to.eq(1);
+      _apiq.push(23);
+
+      expect(_apiq.length).to.eq(2);
       expect(_apiq[0].length).to.eq(2);
       expect(_apiq[0][0]).to.eq('bar');
       expect(_apiq[0][1]).to.eq(3);
+      expect(_apiq[1]).to.eq(23);
     });
 
     it('before init', function() {
