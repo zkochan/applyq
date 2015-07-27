@@ -59,7 +59,7 @@ the `push` method of the commands queue is overridden. The overridden version of
 push is executing the command arrays immediately instead of storing them.
 
 
-## PS
+## P.S.
 
 Some of the explanations of the Asynchronous Syntax were taken from Google
 Analytics [Tracking Basics (Asynchronous Syntax)][tracking-basics].
