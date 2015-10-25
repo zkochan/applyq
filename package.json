@@ -15,6 +15,18 @@
     "email": "zoltan.kochan@gmail.com",
     "url": "http://kochan.io"
   },
+  "keywords": [
+    "asynchronous",
+    "async",
+    "asynchronous-syntax",
+    "async-syntax",
+    "asynchronous-calls",
+    "async-calls",
+    "asynchronous-call",
+    "async-call",
+    "asynchronous-api",
+    "async-api"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zkochan/applyq/issues"

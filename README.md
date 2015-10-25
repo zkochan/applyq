@@ -8,9 +8,11 @@ A JavaScript library for applying asynchronous calls to an API.
 
 
 ## Installation
+
 ```
 npm install --save applyq
 ```
+
 
 ## How the Asynchronous Syntax Works
 
