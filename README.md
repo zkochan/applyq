@@ -8,6 +8,7 @@ A JavaScript library for applying asynchronous calls to an API.
 
 
 ## Installation
+
 ```
 npm install --save applyq
 ```
@@ -57,6 +58,16 @@ After the object had been initialized, there is no need to store the commands
 anymore. The commands can be executed right away. That's why after calling `applyq`
 the `push` method of the commands queue is overridden. The overridden version of
 push is executing the command arrays immediately instead of storing them.
+
+### Whitelist of methods
+
+You might want to process a subset of commands only. In that case you can path
+the list of commands to process:
+
+```js
+/* In this case only commands passed to the register() method will be processed */
+applyq(server, _serverq, ['register']);
+```
 
 
 ## P.S.

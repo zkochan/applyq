@@ -4,7 +4,7 @@
  * @param {Object} obj - The object.
  * @param {Array<Array<commandArray>>} q - An array of command arrays.
  */
-function applyq(obj, q) {
+function applyq(obj, q, methods) {
   if (!(q instanceof Array)) {
     throw new Error('q has to be an instance of Array');
   }
@@ -19,15 +19,16 @@ function applyq(obj, q) {
   q.push = obj.push = function(command) {
     if (arguments.length !== 1 ||
       !(arguments[0] instanceof Array) ||
-      typeof obj[command[0]] !== 'function') {
-      return Array.prototype.push.apply(this, arguments);
+      typeof obj[command[0]] !== 'function' ||
+      methods instanceof Array && methods.indexOf(command[0]) === -1) {
+      return Array.prototype.push.apply(q, arguments);
     }
 
     obj[command[0]].apply(obj, command.splice(1));
   };
 
   var len = q.length;
-  while(len--) {
+  while (len--) {
     q.push(q.shift());
   }
 }
