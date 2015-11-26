@@ -24,7 +24,7 @@ function applyq(obj, q, methods) {
       return Array.prototype.push.apply(q, arguments);
     }
 
-    obj[command[0]].apply(obj, command.splice(1));
+    obj[command[0]].apply(obj, command.slice(1));
   };
 
   var len = q.length;
