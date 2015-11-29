@@ -1,6 +1,6 @@
 {
   "name": "applyq",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "description": "A JavaScript library for applying asynchronous calls to an API.",
   "main": "index.js",
   "scripts": {

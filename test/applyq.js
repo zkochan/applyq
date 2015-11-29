@@ -104,4 +104,36 @@ describe('applyq', function() {
       expect(_apiq[0][1]).to.eq(3);
     });
   });
+
+  it('executes command array only if in the allowed list', function() {
+    var bar = sinon.spy();
+    var foo = sinon.spy();
+    var api = {
+      bar: bar,
+      foo: foo
+    };
+    var _apiq = [];
+    applyq(api, _apiq, ['bar']);
+    _apiq.push(['bar', 5, 'someArg']);
+    _apiq.push(['foo', 5]);
+
+    sinon.assert.calledWith(bar, 5, 'someArg');
+    sinon.assert.notCalled(foo);
+  });
+
+  it('executes cached command array only if in the allowed list', function() {
+    var bar = sinon.spy();
+    var foo = sinon.spy();
+    var api = {
+      bar: bar,
+      foo: foo
+    };
+    var _apiq = [];
+    _apiq.push(['bar', 5, 'someArg']);
+    _apiq.push(['foo', 5]);
+    applyq(api, _apiq, ['bar']);
+
+    sinon.assert.calledWith(bar, 5, 'someArg');
+    sinon.assert.notCalled(foo);
+  });
 });
