@@ -79,7 +79,7 @@ Analytics [Tracking Basics (Asynchronous Syntax)][tracking-basics].
 
 ## License
 
-MIT
+MIT © [Zoltan Kochan](https://www.kochan.io)
 
 
 [tracking-basics]: https://developers.google.com/analytics/devguides/collection/gajs/?csw=1
